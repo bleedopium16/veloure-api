@@ -1,59 +1,85 @@
 # Veloure API
 
-Backend for the Veloure beauty store — Node + Express + MongoDB.
+Backend for **Veloure**, a full-stack beauty e-commerce store.  
+Built with Node.js, Express, and MongoDB.
 
-This is **Step 1**: the server skeleton, data models, the products endpoint, and
-seed data. Auth and orders come next.
+The React frontend lives in a separate repository: [veloure](https://github.com/bleedopium16/veloure)
 
-## What's here
+---
 
-```
-src/
-  models/      Product.js, User.js, Order.js   (Mongoose schemas)
-  routes/      products.js                       (GET products)
-  config/      seed.js                           (sample catalog)
-  server.js    app entry point
-.env.example   copy to .env and fill in
-```
+## Features
 
-## One-time setup
+- **Products** — browse by category (makeup, skincare, haircare), featured bestsellers, and name search
+- **Authentication** — register & login with hashed passwords (bcrypt) and JWT tokens
+- **Cart** — per-user cart with add, remove, and quantity updates, persisted in the database
+- **Orders** — place orders from the cart and view order history
+- **Wishlist** — save favorite products per user
 
-### 1. Get a free MongoDB database
-1. Go to https://www.mongodb.com/atlas and create a free account.
-2. Create a free **M0** cluster.
-3. Database Access → add a database user (note the username + password).
-4. Network Access → Add IP → "Allow access from anywhere" (0.0.0.0/0) for now.
-5. Cluster → Connect → Drivers → copy the connection string.
+---
 
-### 2. Configure the project
+## Tech Stack
+
+- **Node.js + Express** — REST API
+- **MongoDB + Mongoose** — database and schema modeling
+- **JWT** — stateless authentication
+- **bcrypt** — password hashing
+
+---
+
+## API Endpoints
+
+### Products
+- `GET /api/products` — all products (optional `?category=` or `?search=`)
+- `GET /api/products/bestsellers` — featured products
+- `GET /api/products/:id` — single product
+
+### Auth
+- `POST /api/auth/register` — create an account
+- `POST /api/auth/login` — log in
+- `GET /api/auth/me` — current user (protected)
+
+### Cart (protected)
+- `GET /api/cart` — view cart
+- `POST /api/cart` — add item / increase quantity
+- `PATCH /api/cart/decrease` — decrease quantity
+- `DELETE /api/cart/:productId` — remove item
+
+### Orders (protected)
+- `POST /api/orders` — place an order from the cart
+- `GET /api/orders` — order history
+
+### Wishlist (protected)
+- `GET /api/wishlist` — view wishlist
+- `POST /api/wishlist` — toggle a product
+
+---
+
+## Local Setup
+
+### 1. Database
+Create a free MongoDB Atlas cluster and copy your connection string.
+
+### 2. Environment
+Copy the example env file and fill in your values:
 ```bash
 cp .env.example .env
 ```
-Open `.env` and paste your Mongo connection string into `MONGO_URI`
-(replace `<username>` and `<password>` with your real values), and set
-`JWT_SECRET` to any long random string.
+Set `MONGO_URI`, `JWT_SECRET`, `PORT`, and `CLIENT_URL` in `.env`.
 
-### 3. Install + seed + run
+### 3. Run
 ```bash
 npm install
-npm run seed     # fills the database with sample products
-npm run dev      # starts the server on http://localhost:5000
+npm run seed     # populate the database with the product catalog
+npm run dev      # start the server on http://localhost:5000
 ```
 
-## Try it
+---
 
-Open these in your browser (or Postman):
+## Environment Variables
 
-- http://localhost:5000/                          → health check
-- http://localhost:5000/api/products              → all products
-- http://localhost:5000/api/products?category=makeup
-- http://localhost:5000/api/products?category=skincare
-- http://localhost:5000/api/products?category=haircare
-
-If you see JSON come back, the backend is working. 🎉
-
-## Next steps (not built yet)
-- Auth routes (register / login with JWT)
-- Cart routes (add / remove / view, per logged-in user)
-- Order routes (place order, order history)
-- Wire the React frontend to these endpoints
+| Variable      | Description                          |
+|---------------|--------------------------------------|
+| `MONGO_URI`   | MongoDB Atlas connection string      |
+| `JWT_SECRET`  | Secret used to sign JWT tokens       |
+| `PORT`        | Server port (default 5000)           |
+| `CLIENT_URL`  | Frontend URL, for CORS               |
