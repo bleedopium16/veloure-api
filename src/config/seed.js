@@ -4,10 +4,6 @@ import Product from "../models/Product.js";
 
 dotenv.config();
 
-// Your real Veloure catalog. Prices are stored as plain NUMBERS (no rupee
-// symbol) so the backend can calculate cart and order totals. The frontend
-// adds the rupee symbol back when displaying. Images keep their /images/...
-// paths, which your frontend serves from its public/images folder.
 const products = [
   // ---------------- MAKEUP ----------------
   { name: "Christian Dior Addict Lip Maximizer Gloss [001 Pink]", price: 4952, image: "/images/M1.jpg", category: "makeup" },
@@ -73,7 +69,7 @@ async function seed() {
     await mongoose.connect(process.env.MONGO_URI);
     console.log("✅ Connected to MongoDB");
 
-    await Product.deleteMany({}); // clear the old placeholder products
+    await Product.deleteMany({}); 
     await Product.insertMany(products);
     console.log(`🌱 Seeded ${products.length} products`);
 
