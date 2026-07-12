@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
-// An Order is a snapshot taken at checkout. We copy name/price into the order
-// so the record stays correct even if the product is later edited or deleted.
+
 const orderItemSchema = new mongoose.Schema(
   {
     product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
