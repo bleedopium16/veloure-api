@@ -15,8 +15,6 @@ router.post("/", auth, async (req, res) => {
       return res.status(400).json({ message: "Your cart is empty" });
     }
 
-    // Build the order items by copying name + price from each product NOW,
-    // so the order stays accurate even if a product changes price later.
     const items = user.cart.map((line) => ({
       product: line.product._id,
       name: line.product.name,
@@ -32,7 +30,6 @@ router.post("/", auth, async (req, res) => {
       total,
     });
 
-    // Empty the cart now that it's been turned into an order.
     user.cart = [];
     await user.save();
 
