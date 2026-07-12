@@ -5,8 +5,6 @@ import auth from "../middleware/auth.js";
 
 const router = Router();
 
-// Small helper: create a signed JWT for a given user id.
-// expiresIn means the token stops working after 7 days (they'd log in again).
 function makeToken(userId) {
   return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "7d" });
 }
