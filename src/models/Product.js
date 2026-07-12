@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-// A Product is one item in the store. The category field is restricted to the
-// three sections your site already has, so a typo can never sneak into the DB.
 const productSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
@@ -16,7 +14,7 @@ const productSchema = new mongoose.Schema(
     stock: { type: Number, default: 100, min: 0 },
     bestseller: { type: Boolean, default: false },
   },
-  { timestamps: true } // adds createdAt / updatedAt automatically
+  { timestamps: true } 
 );
 
 export default mongoose.model("Product", productSchema);
